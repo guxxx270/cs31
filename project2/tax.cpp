@@ -19,6 +19,11 @@ int main()
   cout << "Market value (in millions):";
   int Market_value;
   cin >> Market_value;
+  if (Market_value < 0)
+  {
+    cout << "The market value must be nonnegative." << endl;
+    return 0;
+  }
   //cout << Market_value << endl;
   cin.ignore(10000, '\n');//this line is important
 
