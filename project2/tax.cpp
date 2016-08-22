@@ -17,12 +17,15 @@ int main()
   const double level_200 = 200;
   const double level_300 = 300;
   const double tax_200 = 4.1/100;
-  cout << tax_200;
+  const double tax_300 = 5.3/100;
+  const double tax_NJ_NY = 5.7/100;
+  const double tax_600 = 6.0/100;
 
   //Get the Market value
   cout << "Market value (in millions):";
   double Market_value;
   cin >> Market_value;
+  cin.ignore(10000, '\n');//this line is important
   if (Market_value < 0)
   {
     cout << "---" << endl;
@@ -32,8 +35,8 @@ int main()
   cout.setf(ios::fixed);//This two line make sure to show in 3232.043 style
   cout.precision(3);
 
-  cout << Market_value << endl;
-  cin.ignore(10000, '\n');//this line is important
+  //cout << Market_value << endl;
+
 
   //Get the Indentification imfornation
   cout << "Identification:";
@@ -59,11 +62,40 @@ int main()
     return 3;
   }
 
+  //calculate the result part.
+  if (Market_value <= 200)
+  {
+    tax = Market_value * tax_200;
+  }
+
+  if (Market_value > 200 && Market_value <= 500)
+  {
+    if (state == "NJ" || state == "NY")
+    {
+    tax = (200.000 * tax_200) + (Market_value - 200.000) * tax_NJ_NY;
+    }
+    else
+    {
+      tax = (200.000 * tax_200) + (Market_value - 200.000) * tax_300;
+    }
+  }
+
+  if (Market_value > 500)
+  {
+    if (state == "NJ" || state == "NY")
+    {
+    tax = 200.000 * tax_200 + 300.000 * tax_NJ_NY + (Market_value - 500) * tax_600;
+    }
+    else
+    {
+      tax = 200.000 * tax_200 + 300.000 * tax_300 + (Market_value - 500) * tax_600;
+    }
+  }
 
   //print the result part.
   cout << "---" << endl;
   cout << "The tax for " << identification << " is $"  << tax << " million." << endl;
-
+}
 //The reason for using the cin.ignore
 /*
 int a,b,c;
@@ -77,6 +109,3 @@ cout<<"input c:";
 cin>>c;
 cout<<a<<"\t"<<b<<"\t"<<c<<endl;
 */
-
-
-}
