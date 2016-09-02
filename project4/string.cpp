@@ -13,22 +13,32 @@
 #include <string>
 
 using namespace std;
-bool processSstep(string text,size_t k)
+bool processSstep(string text,size_t& pos)
 {
-  return false;
+  //size_t pos = k;
+  char direction;
+  pos++;
+  if (!isupper(text[pos]))
+      return false;
+  if(pos == text[pos])
+      return false;
+  direction = text[pos];
+  cout << "Stop at point of interest " << direction <<"." << endl;
+  pos++;
+  return true;
 }
 
 
-bool processRorLstep(string text, size_t k)//do I need to use size_t& k?
+bool processRorLstep(string text, size_t& pos)//do I need to use size_t& k?
 {
   string direction;
-  size_t pos = k;
+  //size_t pos = k;
   if (text[pos] == 'R')
       direction = "right";
   if (text[pos] == 'L')
       direction = "left";
 
-  cout << text[pos];
+  cout << "Turn " << direction;
   string distance;
   pos ++;
   if (isdigit(text[pos]) != 1)
@@ -41,13 +51,15 @@ bool processRorLstep(string text, size_t k)//do I need to use size_t& k?
     distance += text[pos];
     pos++;
   }
-  cout << distance;
+  cout << " and proceed for " << distance << " blocks." << endl;
   return true;
 }
 
 bool translateInstructionString(string text)
 {
-  for(size_t k = 0; k != text.size(); k++)
+  size_t k = 0;
+  //while (k != text.size())
+  for(k = 0; k != text.size(); k = k)
   {
     //cout << text[k] << endl;
     switch(text[k])
@@ -58,19 +70,21 @@ bool translateInstructionString(string text)
             {
               return false;
             }
-            return true;
+            break;
+            //return true;
 
       case 'S':
             if(!processSstep(text,k))
             {
               return false;
             }
-            return true;
+            break;
+            //return true;
       default:
          return false;
     }
   }
-return false;
+  return true;
 }
 
 
