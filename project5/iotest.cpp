@@ -74,6 +74,13 @@ int countLines(istream& inf)
 
 int main()
 {
+   string distance = "";
+   distance += '3';
+   distance += '5';
+   cout << distance << endl;
+
+
+
   ifstream infile("data.txt");
   if(!infile)
   {
